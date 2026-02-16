@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostic Report | Clinical Bio-Scanner</title>
+    <style>
+        /* CSS Refinements for Smooth Experience */
+        :root {
+            --medical-blue: #0a3d62;
+            --danger-red: #b33939;
+            --gold-accent: #d4af37;
+            --light-bg: #f4f7f6;
+        }
+
+        html { scroll-behavior: smooth; }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://imgur.com/a/LQiRG3F') center/cover fixed;
+            display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px;
+        }
+
+        .container {
+            background: #ffffff; padding: 45px; border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4); width: 100%; max-width: 550px;
+            text-align: center; border-top: 8px solid var(--medical-blue);
+        }
+
+        h1 { color: var(--medical-blue); font-size: 26px; margin-bottom: 10px; font-weight: 800; letter-spacing: -1px; }
+        .subtitle { color: #57606f; font-size: 15px; margin-bottom: 30px; line-height: 1.5; }
+
+        .form-group { text-align: left; margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 700; color: #2f3542; font-size: 13px; text-transform: uppercase; }
+        
+        input, select {
+            width: 100%; padding: 14px; border: 2px solid #edeff2; border-radius: 10px;
+            font-size: 16px; transition: all 0.3s ease; background: #f9f9f9;
+        }
+
+        input:focus { border-color: var(--medical-blue); background: #fff; outline: none; box-shadow: 0 0 10px rgba(10, 61, 98, 0.1); }
+
+        .btn-main {
+            width: 100%; padding: 18px; background: var(--medical-blue); color: white;
+            border: none; border-radius: 10px; font-size: 17px; font-weight: 800;
+            cursor: pointer; transition: 0.3s ease; text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        .btn-main:hover { background: #072a44; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .btn-main:disabled { background: #ced6e0; cursor: not-allowed; transform: none; }
+
+        /* Scanner Animation */
+        #scanStatus { display: none; margin-top: 25px; padding: 20px; border-radius: 10px; background: #fff5f5; border: 1px dashed var(--danger-red); }
+        .pulse { animation: pulse-red 1.5s infinite; color: var(--danger-red); font-weight: 700; }
+        @keyframes pulse-red { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        /* Report Page - High Authority Style */
+        #resultPage { display: none; background: #f0f2f5; min-height: 100vh; width: 100%; position: absolute; top: 0; left: 0; padding: 40px 20px; z-index: 2000; }
+        .report-document {
+            max-width: 850px; background: white; margin: 0 auto; padding: 60px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.1); border-radius: 5px; position: relative;
+        }
+        .watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); font-size: 80px; color: rgba(0,0,0,0.03); font-weight: 900; pointer-events: none; }
+        
+        .report-header { border-bottom: 4px solid var(--medical-blue); padding-bottom: 20px; margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center; }
+        .diagnosis-box { background: #fff9f9; border: 2px solid #ffebeb; padding: 30px; border-radius: 12px; margin-top: 20px; }
+        
+        .warning-text { color: var(--danger-red); font-weight: 800; font-size: 18px; margin-bottom: 15px; display: flex; align-items: center; }
+        .critical-note { line-height: 1.8; text-align: justify; color: #2d3436; font-size: 16px; }
+        
+        .solution-highlight {
+            margin-top: 30px; padding: 25px; background: var(--medical-blue); color: white; border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(10, 61, 98, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="mainContainer">
+        <h1>Bio-Magnetic GPS Scanner</h1>
+        <p class="subtitle">Teknolojia ya kisasa ya uchunguzi wa ndani ya mwili (Intracellular Diagnostic System).</p>
+
+        <div id="formSection">
+            <div class="form-group">
+                <label>Jina la Mgonjwa / Patient Name</label>
+                <input type="text" id="name" placeholder="Ingiza majina kamili..." required>
+            </div>
+            <div class="form-group">
+                <label>Umri</label>
+                <input type="number" id="age" placeholder="Miaka..." required>
+            </div>
+            <div class="form-group">
+                <label>Jinsia</label>
+                <select id="gender">
+                    <option value="male">Mwanaume</option>
+                    <option value="female">Mwanamke</option>
+                </select>
+            </div>
+            <button class="btn-main" id="startBtn" onclick="runDiagnostic()">ANZISHA UCHUNGUZI WA KINA</button>
+            
+            <div id="scanStatus">
+                <p class="pulse">UCHUNGUZI WA MFUMO WA DAMU NA NEVA UNAENDELEA...</p>
+                <p style="font-size: 12px; color: #636e72; margin-top: 10px;">Usifunge ukurasa huu. Bio-sensors zinachakata data... <span id="timer">30</span>s</p>
+            </div>
+        </div>
+
+        <div id="lockMessage" style="display:none; padding: 20px; color: var(--danger-red);">
+            <p><strong>ILANI YA USALAMA:</strong> Umeshatumia fursa yako ya uchunguzi kwa leo. Mfumo umefungwa kwa ajili ya usalama wa mionzi.</p>
+        </div>
+    </div>
+
+    <div id="resultPage">
+        <div class="report-document">
+            <div class="watermark">CONFIDENTIAL</div>
+            <div class="report-header">
+                <div>
+                    <h2 style="color: var(--medical-blue); margin: 0;">DR. WILLIAM CLINIC</h2>
+                    <p style="font-size: 12px; color: #666;">ISO Certified Bio-Resonance Laboratory</p>
+                </div>
+                <div style="text-align: right;">
+                    <p style="font-size: 14px; font-weight: bold;" id="resDate"></p>
+                    <p style="font-size: 12px; color: var(--danger-red);">Status: CRITICAL FINDINGS</p>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <p><strong>JINA LA MGONJWA:</strong> <span id="resName" style="border-bottom: 1px solid #ddd;"></span></p>
+                <p><strong>ID YA TATHMINI:</strong> <span id="resID"></span></p>
+            </div>
+
+            <div class="diagnosis-box">
+                <div class="warning-text">⚠️ TAHADHARI: MATOKEO YASIYO YA KAWAIDA</div>
+                <div class="critical-note">
+                    Uchunguzi wa Bio-Magnetic umebaini <strong>Uharibifu wa Seli (Cellular Decay)</strong> unaosababishwa na mrundikano wa sumu kali kwenye mfumo wa damu (Vascular Toxicity). 
+                    Hali hii ni hatari sana kwani inaanza kufifisha utendaji kazi wa figo na ini bila wewe kuhisi maumivu yoyote kwa sasa. 
+                    <br><br>
+                    <strong>HATARI:</strong> Ikiwa hatua za haraka hazitachukuliwa ndani ya siku 7, mwili utashindwa kutoa uchafu (Metabolic waste), jambo linaloweza kupelekea uchovu sugu, shinikizo la ghafla, au kufeli kwa mifumo ya ndani (Organ Failure).
+                </div>
+            </div>
+
+            <div class="solution-highlight">
+                <h3 style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 10px;">HATUA ZA HARAKA (EMERGENCY PROTOCOL)</h3>
+                <p style="font-size: 17px; line-height: 1.6;">
+                    Ili kusimamisha uharibifu huu mara moja, ni <strong>LAZIMA</strong> kuanza kutumia <strong>ZETRONE</strong>. 
+                    Hii ndiyo teknolojia pekee iliyothibitishwa kusafisha damu kwa kina (Deep-Cell Detox) na kurejesha uimara wa kuta za seli kabla ya madhara kuwa makubwa zaidi. 
+                    <strong>ZETRONE</strong> itafanya kazi ya kufuta sumu hizi na kukuondolea hatari iliyobainika kwenye scan hii.
+                </p>
+            </div>
+
+            <div style="margin-top: 40px; text-align: center;">
+                <button class="btn-main" style="width: auto; padding: 15px 50px;" onclick="window.print()">PAKUA RIPOTI HII NA WASILIANA NA DR. WILLIAM</button>
+                <p style="margin-top: 20px; font-size: 11px; color: #999;">Hii ni ripoti rasmi ya kielektroniki. Alama za siri zimeingizwa kuzuia udanganyifu.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check for repeat users
+        window.onload = function() {
+            if (localStorage.getItem('dr_william_scan_lock')) {
+                document.getElementById('formSection').style.display = 'none';
+                document.getElementById('lockMessage').style.display = 'block';
+            }
+        };
+
+        function runDiagnostic() {
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            if(!name || !age) { alert("Tafadhali jaza taarifa zote ili mfumo uanze."); return; }
+
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('scanStatus').style.display = 'block';
+
+            let seconds = 30;
+            const timerDisplay = document.getElementById('timer');
+
+            const countdown = setInterval(() => {
+                seconds--;
+                timerDisplay.innerText = seconds;
+                if(seconds <= 0) {
+                    clearInterval(countdown);
+                    showReport(name, age);
+                }
+            }, 1000);
+        }
+
+        function showReport(name, age) {
+            // Lock the system
+            localStorage.setItem('dr_william_scan_lock', 'true');
+
+            // Set Data
+            document.getElementById('resName').innerText = name.toUpperCase();
+            document.getElementById('resDate').innerText = new Date().toLocaleDateString('en-GB');
+            document.getElementById('resID').innerText = "BW-" + Math.floor(Math.random() * 900000 + 100000);
+
+            // UI Transition
+            document.getElementById('mainContainer').style.display = 'none';
+            document.getElementById('resultPage').style.display = 'block';
+            window.scrollTo(0,0);
+        }
+    </script>
+</body>
+</html>
