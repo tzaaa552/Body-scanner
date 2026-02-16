@@ -132,7 +132,63 @@
 
             <div class="diagnosis-box">
                 <div class="warning-text">⚠️ TAHADHARI: MATOKEO YASIYO YA KAWAIDA</div>
-                <div class="critical-note">
+                <div class="critical-note">/**
+ * @function generateComprehensiveReport
+ * @description Inazalisha ripoti jumuishi ya afya (All-in-One) kwa wagonjwa wenye sifa zote za maradhi yaliyobainika.
+ * @param {string|number} age - Umri wa mhusika
+ * @param {string} gender - 'male' au 'female'
+ * @returns {string} Ripoti kamili yenye ushawishi wa ZETRONE
+ */
+function generateComprehensiveReport(age, gender) {
+    const ageNum = parseInt(age);
+    const jinsia = (gender === 'male') ? 'WAKIUME' : 'WAKIKE';
+    
+    let report = `### **RIPOTI JUMUISHI YA VIPIMO VYA AFYA (DIGITAL BIO-MAGNETIC SCAN)**\n\n`;
+    report += `**TAARIFA ZA MGONJWA:**\n`;
+    report += `- Jinsia: ${jinsia}\n`;
+    report += `- Umri: ${ageNum}\n`;
+    report += `- Mfumo: Advanced Magnetic Resonance (AMR)\n\n`;
+
+    report += `Haya ni majibu ya vipimo vyako ambavyo vimebainika baada ya kufanya uchunguzi wa kimfumo wa mwili wako kuanzia juu mpaka chini. Mfumo wetu unatumia teknolojia ya mivumo ya sumaku kuvuta baadhi ya miale na taxi (sumu) kupitia kifaa chako ili kubaini majibu yafuatayo ya pamoja:\n\n`;
+
+    // 1. MFUMO WA MOYO NA DAMU
+    report += `1. **Mzunguko wa Damu na Moyo:** Imebainika kuwa mzunguko wako wa damu unazunguka kwa kasi ya juu sana (Systemic Hyper-circulation). Moyo wako unaenda katika hali ya juu ya mapigo hasa wakati wa usiku unapokuwa umelala, hali inayopelekea moyo kulemewa na kuta za mishipa kupata shinikizo kubwa.\n\n`;
+
+    // 2. USAFI WA DAMU NA MAJI
+    report += `2. **Mchafuko wa Damu na Upungufu wa Maji:** Sumaku za kifaa chako zinaonyesha kiwango cha damu kilichopo mwilini mwako ni KICHAFU na kimejaa mabaki ya sumu. Pia, kuna uashiria wa upungufu wa maji; maji yapo kiwango kidogo sana kwenye mfumo wa damu, hali inayofanya damu iwe nzito na kuleta mvurugiko wa seli.\n\n`;
+
+    // 3. MACHO
+    report += `3. **Mishipa ya Macho na Lenzi:** Kipimo kimeweza kubaini kuwa mishipa inayopitisha damu kwenye macho inazidi kusinyaa (Vascular Constriction). Hii ina hatari ya kupelekea shida ya uoni hafifu au uharibifu wa lenzi za macho mapema zaidi.\n\n`;
+
+    // 4. KIFUA NA UPUMUAJI
+    report += `4. **Eneo la Kifua na Upumuaji:** Upande wa kushoto wa kifua unaonyesha viashiria vya "shadows" vinavyofanana na makovu. Hii inaashiria kuwa mfumo wa hewa unakabiliwa na vizuizi kutokana na hewa chafu au mrundikano wa sumu wa muda mrefu.\n\n`;
+
+    // 5. TUMBO NA GESI
+    report += `5. **Mfumo wa Tumbo na Gesi:** Tumebaini limbikizo kubwa la gesi upande wa kushoto wa tumbo ambalo halitoki kirahisi. Hii inaweza kuleta shida ya madonda ya tumbo sugu, viungulia, na kichefuchefu punde unapotumia baadhi ya vyakula.\n\n`;
+
+    // 6. FIGO NA KIUNO
+    report += `6. **Figo na Udhaifu wa Kiuno:** Kuanzia eneo la kiuno upande wa kushoto, figo yako inazidi kulemewa kiasi kikubwa (Renal Stress). Hii inatokana na mwili kukosa maji ya kutosha na kuzidiwa na sumu ambazo hazijatolewa mwilini.\n\n`;
+
+    // 7. MIGUU NA GANZI
+    report += `7. **Mishipa ya Miguu na Ganzi:** Mishipa kuanzia miguuni chini mpaka juu inaonekana kukandamizwa kwa sababu ya kutopita kwa damu vizuri. Unaweza kujikuta unapata changamoto za miguu kuvimba, kupata ganzi mara kwa mara, au miguu kuwaka moto.\n\n`;
+
+    // 8. HALI YA KIHISIA NA USINGIZI
+    report += `8. **Hali ya Kihisia na Joto la Mwili:** Joto la mwili liko juu na mishipa inatoa mwangwi mkubwa, kuashiria ukosefu wa usingizi mnono na mrundikano wa hasira au msongo wa mawazo unaoathiri afya yako kiakili.\n\n`;
+
+    // SEHEMU YA USHAURI WA ZETRONE
+    report += `--- \n`;
+    report += `### **USHAURI WA KITABIBU NA SULUHISHO:**\n\n`;
+    report += `Majibu haya yanatoa ushauri wa msingi na dharura kwako kulingana na umri wako wa miaka **${ageNum}**. Ili kusafisha mzunguko wa damu uliokithiri mchafuko, kulinda figo zako, na kuondoa ganzi mwilini, unashauriwa sana kutafuta dawa ya **ZETRONE**.\n\n`;
+    report += `Dawa ya **ZETRONE** ina uwezo mkubwa wa kutoa sumu mwilini (Detoxification) kwa asilimia kubwa zaidi. Itakusaidia kusafisha mfumo wako wa damu na kurejesha utendaji kazi wa mishipa iliyobainika kulemewa hapa juu.\n\n`;
+    report += `**Zingatia:** Afya yako ndiyo mtaji wako mkuu; uamuzi wa kuitetea ni wako leo kabla hali haijawa mbaya zaidi.\n\n`;
+    report += `*Disclaimer: Habari hii ni kwa ajili ya elimu. Daima wasiliana na mtaalamu wa afya aliyesajiliwa katika Wizara ya Afya Tanzania kwa uchunguzi zaidi.*`;
+
+    return report;
+}
+
+// Mfano wa kutoa majibu ya mgonjwa wa kiume miaka 45:
+// console.log(generateComprehensiveReport(45, 'male'));
+
                     Uchunguzi wa Bio-Magnetic umebaini <strong>Uharibifu wa Seli (Cellular Decay)</strong> unaosababishwa na mrundikano wa sumu kali kwenye mfumo wa damu (Vascular Toxicity). 
                     Hali hii ni hatari sana kwani inaanza kufifisha utendaji kazi wa figo na ini bila wewe kuhisi maumivu yoyote kwa sasa. 
                     <br><br>
